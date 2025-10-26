@@ -1,4 +1,4 @@
-import { PILE_TYPES, CARD_DIMENSIONS } from './constants.js';
+import { PILE_TYPES } from './constants.js';
 
 export class UI {
     constructor(game, onMove) {
@@ -301,4 +301,3 @@ export class UI {
         this.elements.winScreen.classList.remove('hidden');
     }
 }
-
