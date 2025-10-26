@@ -145,7 +145,34 @@ body {
 }
 
 .card.face-up {
-    background-image: url('./card_faces.png');
+    background-image: none; /* Remove spritesheet */
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: black;
+}
+
+.card-corner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+}
+
+.card-corner .rank {
+    font-size: 1.2em;
+}
+.card-corner .suit {
+    font-size: 1em;
+}
+
+.card-corner.bottom-right {
+    align-self: flex-end;
+    transform: rotate(180deg);
 }
 
 .card.dragging {

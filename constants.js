@@ -25,9 +25,3 @@ export const PILE_TYPES = {
     FOUNDATION: 'foundation'
 };
 
-export const CARD_DIMENSIONS = {
-    WIDTH: 1024 / 13, // width of one card from the sprite sheet
-    HEIGHT: 600 / 4, // height of one card from the sprite sheet
-    ASPECT_RATIO: 1.4
-};
-

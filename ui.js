@@ -250,7 +250,7 @@ export class UI {
         // Render Stock
         if (this.game.stock.length > 0) {
             const cardEl = this.createCardElement(this.game.stock[0]); // Show back of a card
-            cardEl.classList.add('face-down');
+            // cardEl.classList.add('face-down'); // createCardElement handles this now.
             this.elements.stock.appendChild(cardEl);
         } else {
             this.elements.stock.classList.add('empty-stock-placeholder');
@@ -263,10 +263,25 @@ export class UI {
         el.dataset.id = card.id;
         if (card.isFaceUp) {
             el.classList.add('face-up');
-            const rankIndex = "A2345678910JQK".indexOf(card.rank);
-            const suitIndex = ['hearts', 'diamonds', 'clubs', 'spades'].indexOf(card.suit);
-            el.style.backgroundPosition = `-${rankIndex * CARD_DIMENSIONS.WIDTH}px -${suitIndex * CARD_DIMENSIONS.HEIGHT}px`;
-            el.style.backgroundSize = `${CARD_DIMENSIONS.WIDTH * 13}px ${CARD_DIMENSIONS.HEIGHT * 4}px`;
+            const suitSymbols = {
+                hearts: '&hearts;',
+                diamonds: '&diams;',
+                clubs: '&clubs;',
+                spades: '&spades;'
+            };
+            const color = (card.suit === 'hearts' || card.suit === 'diamonds') ? 'red' : 'black';
+            
+            const rankDisplay = card.rank;
+
+            const corner = (position) => `
+                <div class="card-corner ${position}">
+                    <div class="rank">${rankDisplay}</div>
+                    <div class="suit">${suitSymbols[card.suit]}</div>
+                </div>
+            `;
+            
+            el.innerHTML = corner('top-left') + corner('bottom-right');
+            el.style.color = color;
         } else {
             el.classList.add('face-down');
         }
