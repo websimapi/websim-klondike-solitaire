@@ -263,11 +263,11 @@ export class UI {
         el.dataset.id = card.id;
         if (card.isFaceUp) {
             el.classList.add('face-up');
-            const suitSymbols = {
-                hearts: '&hearts;',
-                diamonds: '&diams;',
-                clubs: '&clubs;',
-                spades: '&spades;'
+            const suitSVGs = {
+                hearts: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
+                diamonds: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 12l10 10 10-12L12 2z"/></svg>`,
+                clubs: `<svg viewBox="0 0 512 512" fill="currentColor"><path d="M347.4 204.3c39.6-40.4 39.6-106 0-146.4s-104.5-40.4-144.1 0L192 69.1 180.7 57.7c-39.6-40.4-104.5-40.4-144.1 0s-39.6 106 0 146.4l11.3 11.6-11.3 11.6C0 263.6 0 329.2 39.6 369.6s104.5 40.4 144.1 0L195 358.3l-11.3 11.6c-39.6 40.4-39.6 106 0 146.4s104.5 40.4 144.1 0l11.3-11.6 11.3 11.6c39.6 40.4 104.5 40.4 144.1 0s39.6-106 0-146.4l-11.3-11.6 11.3-11.6c39.6-40.4 39.6-106 0-146.4l-11.3-11.6 11.3-11.6zM256 304a48 48 0 110-96 48 48 0 110 96z"/></svg>`,
+                spades: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.47 2 2 6.47 2 12c0 2.21.89 4.21 2.34 5.66L12 22l7.66-4.34C21.11 16.21 22 14.21 22 12c0-5.53-4.47-10-10-10zm0 18.34L4.83 15.17A8.011 8.011 0 014 12c0-4.41 3.59-8 8-8s8 3.59 8 8c0 1.76-.57 3.39-1.53 4.7l-4.47 4.64z"/></svg>`
             };
             const color = (card.suit === 'hearts' || card.suit === 'diamonds') ? 'red' : 'black';
             
@@ -276,7 +276,7 @@ export class UI {
             const corner = (position) => `
                 <div class="card-corner ${position}">
                     <div class="rank">${rankDisplay}</div>
-                    <div class="suit">${suitSymbols[card.suit]}</div>
+                    <div class="suit">${suitSVGs[card.suit]}</div>
                 </div>
             `;
             

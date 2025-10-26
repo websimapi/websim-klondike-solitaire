@@ -150,24 +150,26 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 5px;
-    font-size: 1.2em;
+    padding: 4px;
+    font-size: 16px;
     font-weight: bold;
     color: black;
+    box-sizing: border-box;
 }
 
 .card-corner {
     display: flex;
     flex-direction: column;
     align-items: center;
-    line-height: 1;
+    line-height: 0.9;
 }
 
 .card-corner .rank {
-    font-size: 1.2em;
+    font-size: 1.1em;
 }
-.card-corner .suit {
-    font-size: 1em;
+.card-corner .suit svg {
+    width: 0.9em;
+    height: 0.9em;
 }
 
 .card-corner.bottom-right {
