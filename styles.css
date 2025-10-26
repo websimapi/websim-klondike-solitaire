@@ -1,0 +1,249 @@
+:root {
+    --card-width: 90px;
+    --card-height: calc(var(--card-width) * 1.4);
+    --card-border-radius: 6px;
+    --gap: 10px;
+    --board-bg: #006400; /* Dark Green */
+    --placeholder-bg: rgba(0, 0, 0, 0.2);
+    --tableau-offset: 25px;
+    --tableau-offset-facedown: 10px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #0f4d1c;
+    color: white;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+}
+
+#game-container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    padding: var(--gap);
+}
+
+#top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--gap);
+    flex-shrink: 0;
+}
+
+#controls button {
+    padding: 8px 12px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: var(--gap);
+}
+
+#controls button:hover {
+    background-color: #45a049;
+}
+
+#stats {
+    display: flex;
+    gap: 20px;
+    font-size: 16px;
+}
+
+#game-board {
+    position: relative;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.top-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--gap);
+}
+
+.stock-waste-container, #foundations, #tableau {
+    display: flex;
+    gap: var(--gap);
+}
+
+.pile-placeholder {
+    width: var(--card-width);
+    height: var(--card-height);
+    border: 2px dashed var(--placeholder-bg);
+    border-radius: var(--card-border-radius);
+    background-color: transparent;
+    position: relative;
+}
+#stock.empty-stock-placeholder {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path><path d="M14.5 9.5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v2.5a1 1 0 0 1-1 1h-1z"></path></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50%;
+}
+
+
+.foundation[data-suit="hearts"]::after,
+.foundation[data-suit="diamonds"]::after,
+.foundation[data-suit="clubs"]::after,
+.foundation[data-suit="spades"]::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 50%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.2;
+}
+.foundation[data-suit="hearts"]::after { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');}
+.foundation[data-suit="diamonds"]::after { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red"><path d="M12 2L2 12l10 10 10-12L12 2z"/></svg>');}
+.foundation[data-suit="clubs"]::after { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><path d="M20.34 11.66a8 8 0 10-8.68 8.68 8 8 0 008.68-8.68zM12 18a6 6 0 116-6 6 6 0 01-6 6z"/><path d="M12 2a4 4 0 104 4 4 4 0 00-4-4zm0 6a2 2 0 112-2 2 2 0 01-2 2z"/><path d="M6 8a4 4 0 104 4 4 4 0 00-4-4zm0 6a2 2 0 112-2 2 2 0 01-2 2z"/><path d="M18 8a4 4 0 104 4 4 4 0 00-4-4zm0 6a2 2 0 112-2 2 2 0 01-2 2z"/></svg>');}
+.foundation[data-suit="spades"]::after { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><path d="M12 2L2 12h5v7h10v-7h5L12 2z"/></svg>');}
+
+
+.pile {
+    width: var(--card-width);
+    height: var(--card-height);
+    position: relative;
+}
+
+#tableau {
+    justify-content: space-between;
+    width: calc(7 * var(--card-width) + 6 * var(--gap));
+}
+
+.card {
+    width: var(--card-width);
+    height: var(--card-height);
+    border-radius: var(--card-border-radius);
+    background-color: white;
+    position: absolute;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: transform 0.2s ease-out, top 0.2s ease-out, left 0.2s ease-out;
+    background-size: cover;
+    background-position: center;
+    border: 1px solid #aaa;
+    box-sizing: border-box;
+}
+
+.card.face-down {
+    background-image: url('./card_back.png');
+}
+
+.card.face-up {
+    background-image: url('./card_faces.png');
+}
+
+.card.dragging {
+    transform: rotate(3deg) scale(1.05);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    z-index: 1000 !important;
+    cursor: grabbing;
+}
+
+.card.selected {
+    outline: 3px solid #00aaff;
+    outline-offset: 2px;
+}
+
+.card.hint {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 0 0 0 rgba(255, 215, 0, 0.7); }
+    70% { box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 0 0 10px rgba(255, 215, 0, 0); }
+    100% { box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 0 0 0 rgba(255, 215, 0, 0); }
+}
+
+.drop-target {
+    outline: 3px dashed #4CAF50;
+    outline-offset: 2px;
+}
+
+#win-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+#win-screen.hidden {
+    display: none;
+}
+
+.win-content {
+    background-color: var(--board-bg);
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+    border: 2px solid #4CAF50;
+}
+
+.win-content h2 {
+    margin-top: 0;
+    font-size: 3em;
+    color: #ffd700;
+}
+
+.win-content p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+#win-new-game {
+    padding: 15px 30px;
+    font-size: 1.5em;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    :root {
+        --card-width: 11vw;
+        --gap: 1vw;
+        --tableau-offset: 2.5vh;
+        --tableau-offset-facedown: 1vh;
+    }
+    #tableau {
+        width: 100%;
+    }
+    #top-bar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+    }
+    #stats {
+        font-size: 14px;
+        gap: 10px;
+    }
+    #controls button {
+        font-size: 14px;
+        padding: 5px 8px;
+    }
+}
+
